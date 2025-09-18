@@ -1,7 +1,7 @@
 export default ({ config }) => ({
   ...config,
-  name: 'Component Template',
-  slug: 'component-template',
+  name: '@portable-content/react-native-sketch-board',
+  slug: 'portable-content-react-native-sketch-board',
   version: '0.1.0',
   main: 'node_modules/expo/AppEntry.js',
   orientation: 'portrait',

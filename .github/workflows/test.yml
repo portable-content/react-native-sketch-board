@@ -26,43 +26,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Detect package manager
-        id: detect-pm
-        run: |
-          if [ -f "yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=yarn install --frozen-lockfile" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-          elif [ -f "pnpm-lock.yaml" ]; then
-            echo "manager=pnpm" >> $GITHUB_OUTPUT
-            echo "command=pnpm install --frozen-lockfile" >> $GITHUB_OUTPUT
-            echo "runner=pnpm" >> $GITHUB_OUTPUT
-          elif [ -f "package-lock.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=npm install" >> $GITHUB_OUTPUT
-            echo "runner=npm run" >> $GITHUB_OUTPUT
-          else
-            echo "❌ No lock file found!"
-            echo "Please commit a lock file to ensure reproducible builds:"
-            echo "  - For npm: commit package-lock.json (run 'npm install')"
-            echo "  - For yarn: commit yarn.lock (run 'yarn install')"
-            echo "  - For pnpm: commit pnpm-lock.yaml (run 'pnpm install')"
-            echo ""
-            echo "This ensures all developers and CI use the same dependency versions."
-            exit 1
-          fi
 
-      - name: Setup package manager cache
+      - name: Setup Yarn cache
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: ${{ steps.detect-pm.outputs.manager }}
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: ${{ steps.detect-pm.outputs.command }}
+        run: yarn install --frozen-lockfile
 
       - name: Run tests with coverage
-        run: ${{ steps.detect-pm.outputs.runner }} test:coverage
+        run: yarn test:coverage
 
       - name: Verify coverage directory
         run: |
@@ -76,5 +51,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
-          slug: zestic/react-native-expo-component-template
+          slug: portable-content/react-native-sketch-board
           fail_ci_if_error: true
