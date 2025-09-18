@@ -1,6 +1,5 @@
 # SketchBoard React Native Component
 
-
 **SketchBoard** is a flexible, high-performance drawing component for React Native, inspired by the [drawing-board](https://github.com/ammarahm-ed/drawing-board) project and built with [react-native-skia](https://shopify.github.io/react-native-skia/). It is designed for integration into apps that need sketching, annotation, or freehand drawing features.
 
 ---
